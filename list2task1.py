@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 @author: Kamil Król
 """
@@ -93,6 +92,7 @@ nx.draw_shell(G, with_labels=True, font_weight='bold', **options)
 plt.savefig("graph3.png")
 G3 = G
 H3 = H
+plt.show()
 
 
 def test_reliability(tG, tH):
@@ -105,9 +105,11 @@ def test_reliability(tG, tH):
             rando = rand.random()
             # print(rando)
             if func[1] <= rando:
-                tG.remove_edge(*func[0])
+                # tG.remove_edge(*func[0])
                 removedEdges.add(func[0])
         # print("test%s: %s" % (i,nx.is_connected(tG)))
+        tG.remove_edges_from(removedEdges)
+        # filtered = nx.classes.graphviews.subgraph_view(tG, filter_edge=lambda x, y, _: (x, y) not in removedEdges)
         if nx.is_connected(tG):
             numOfSuccesses += 1
         tG.add_edges_from(removedEdges)
