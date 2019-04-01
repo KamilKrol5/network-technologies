@@ -14,7 +14,7 @@ numberOfTests = 100000
 
 options = {
     'node_color': 'red',
-    'node_size': 500,
+    'node_size': 600,
     'width': 3,
     'style': 'solid'
 }
@@ -25,10 +25,10 @@ class Vertex:
         self.value = value
 
     def __str__(self):
-        return "{%s}" % self.value
+        return "<%s>" % self.value
 
     def __repr__(self):
-        return "{%s}" % self.value
+        return "<%s>" % self.value
 
 
 # creating default graph
@@ -76,7 +76,7 @@ G0 = G.copy()
 H0 = H.copy()
 prepare_graph_for_case1()
 plt.figure()
-nx.draw(G, with_labels=True, font_weight='bold', **options)
+nx.draw_shell(G, with_labels=True, font_weight='bold', **options)
 plt.savefig("graph1.png")
 G1 = G.copy()
 H1 = H.copy()
