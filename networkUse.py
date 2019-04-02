@@ -37,40 +37,41 @@ N = \
     ]
 
 E_dense = [
-    (V[0], V[4], {"probability": 0.3, "capacity": 1300}),
-    (V[0], V[6], {"probability": 0.3, "capacity": 5000}),
-    (V[0], V[2], {"probability": 0.3, "capacity": 5000}),
-    (V[1], V[5], {"probability": 0.3, "capacity": 5000}),
-    (V[1], V[7], {"probability": 0.3, "capacity": 5000}),
-    (V[1], V[8], {"probability": 0.3, "capacity": 5000}),
-    (V[1], V[2], {"probability": 0.3, "capacity": 5000}),
-    (V[2], V[4], {"probability": 0.3, "capacity": 5000}),
-    (V[2], V[3], {"probability": 0.3, "capacity": 5000}),
-    (V[3], V[7], {"probability": 0.3, "capacity": 5000}),
-    (V[3], V[6], {"probability": 0.3, "capacity": 5000}),
-    (V[4], V[9], {"probability": 0.3, "capacity": 5000}),
-    (V[4], V[5], {"probability": 0.3, "capacity": 5000}),
-    (V[5], V[9], {"probability": 0.3, "capacity": 5000}),
-    (V[5], V[8], {"probability": 0.3, "capacity": 5000}),
-    (V[8], V[9], {"probability": 0.3, "capacity": 5000}),
-    (V[1], V[6], {"probability": 0.3, "capacity": 5000}),
-    (V[0], V[5], {"probability": 0.3, "capacity": 5000}),
-    (V[1], V[3], {"probability": 0.3, "capacity": 5000}),
-    (V[1], V[4], {"probability": 0.3, "capacity": 5000}),
-    (V[3], V[4], {"probability": 0.3, "capacity": 5000}),
-    (V[2], V[8], {"probability": 0.3, "capacity": 5000}),
-    (V[3], V[8], {"probability": 0.3, "capacity": 5000}),
-    (V[3], V[9], {"probability": 0.3, "capacity": 5000}),
-    (V[4], V[6], {"probability": 0.3, "capacity": 5000}),
-    (V[7], V[9], {"probability": 0.3, "capacity": 5000}),
+    (V[0], V[4], {"probability": 0.95, "capacity": 5000}),
+    (V[0], V[6], {"probability": 0.95, "capacity": 5000}),
+    (V[0], V[2], {"probability": 0.95, "capacity": 5000}),
+    (V[1], V[5], {"probability": 0.95, "capacity": 5000}),
+    (V[1], V[7], {"probability": 0.95, "capacity": 5000}),
+    (V[1], V[8], {"probability": 0.95, "capacity": 5000}),
+    (V[1], V[2], {"probability": 0.95, "capacity": 5000}),
+    (V[2], V[4], {"probability": 0.95, "capacity": 5000}),
+    (V[2], V[3], {"probability": 0.95, "capacity": 5000}),
+    (V[3], V[7], {"probability": 0.95, "capacity": 5000}),
+    (V[3], V[6], {"probability": 0.95, "capacity": 5000}),
+    (V[4], V[9], {"probability": 0.95, "capacity": 5000}),
+    (V[4], V[5], {"probability": 0.95, "capacity": 5000}),
+    (V[5], V[9], {"probability": 0.95, "capacity": 5000}),
+    (V[5], V[8], {"probability": 0.95, "capacity": 5000}),
+    (V[8], V[9], {"probability": 0.95, "capacity": 5000}),
+    (V[1], V[6], {"probability": 0.95, "capacity": 5000}),
+    (V[0], V[5], {"probability": 0.95, "capacity": 5000}),
+    (V[1], V[3], {"probability": 0.95, "capacity": 5000}),
+    (V[1], V[4], {"probability": 0.95, "capacity": 5000}),
+    (V[3], V[4], {"probability": 0.95, "capacity": 5000}),
+    (V[2], V[8], {"probability": 0.95, "capacity": 5000}),
+    (V[3], V[8], {"probability": 0.95, "capacity": 5000}),
+    (V[3], V[9], {"probability": 0.95, "capacity": 5000}),
+    (V[4], V[6], {"probability": 0.95, "capacity": 5000}),
+    (V[7], V[9], {"probability": 0.95, "capacity": 5000}),
 ]
 
 E_complete = list()
 for j in range(0, len(V)):
     for i in range(0, len(V)):
         if i != j:
-            E_complete.append((V[i], V[j], {"probability": 0.3, "capacity": 5000}))
+            E_complete.append((V[i], V[j], {"probability": 0.95, "capacity": 5000}))
 
+n = ntw.Network(V, E, N)
 n1 = ntw.Network(V, E_dense, N)
 n2 = ntw.Network(V, E_complete, N)
 # n1.draw(filename="dense_graph.png")
