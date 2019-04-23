@@ -16,7 +16,7 @@ def decode(frame=None):
         crc_from_frame = frame_data[-32:]
         message = frame_data[0:-32]
         # print(message)
-        crc_from_message = bin(zlib.crc32(message.encode()))[-32:]
+        crc_from_message = bin(zlib.crc32(message.encode()))[2:].zfill(32)
         # print("CRC FRAME"+crc_from_frame)
         # print("CRC MESS "+crc_from_message)
         if crc_from_message != crc_from_frame:
@@ -37,10 +37,10 @@ def encode(message=None):
             message = message + line.rstrip()
         file1.close()
 
-    crc = bin(zlib.crc32(message.encode()))[-32:]
+    crc = bin(zlib.crc32(message.encode()))[2:].zfill(32)
     stuffed_crc = stuff(crc)
-    # print(crc)
-    # print(stuffed_crc)
+    print(crc)
+    print(stuffed_crc)
     stuffed_message = stuff(message)
 
     file = open("frame1", "w")
