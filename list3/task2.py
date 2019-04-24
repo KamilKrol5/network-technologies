@@ -2,9 +2,9 @@ import random
 import collections as col
 import copy
 
-CHANNEL_LENGTH = 15
+CHANNEL_LENGTH = 30
 MESSAGE_LENGTH = 2 * CHANNEL_LENGTH
-MESSAGE_PROBABILITY = 0.1
+MESSAGE_PROBABILITY = 0.05
 # EMPTY_PLACE = '0'
 COLLISION = '#'
 DISRUPT_SIGNAL = '!'
@@ -33,7 +33,8 @@ class Station:
 
 stations = [
     Station(2, 'A'),
-    Station(7, 'B'),
+    Station(8, 'B'),
+    Station(24, 'C'),
     # Station(17, 'C')
 ]
 
@@ -50,46 +51,49 @@ class ChannelWorld:
         self.channel = ch
         self.directions = d
         self.stations = s
+        self.collision_counter = 0
 
     def print_stations_to_file(self, filename=None):
         if filename is None:
             filename = "stations"
         file1 = open(filename, "a+")
         # file1.writelines('\n' + str(list(map(lambda x: '-' if len(x) <= 0 else x.pop(), self.directions))) + '\n')
-        file1.write('\n')
-        file1.write('\n')
+        # file1.write('\n')
+        # file1.write('\n')
         # for d in self.directions:
         #     if len(d) > 0:
-        #         file1.write(' ' + str(d[0]) + ' ')
+        #         file1.write(str(d[0]))
         #     else:
-        #         file1.write(' - ')
+        #         file1.write('Z-')
         # file1.write('\n')
         for d in self.channel:
             if len(d) > 0:
                 if DISRUPT_SIGNAL in d:
-                    file1.write(' ' + str(DISRUPT_SIGNAL) + ' ')
+                    file1.write(str(DISRUPT_SIGNAL))
                 else:
-                    file1.write(' ' + str(d[0]) + ' ')
+                    file1.write(str(d[0]))
             else:
-                file1.write(' 0 ')
+                file1.write('0')
         file1.write('\n')
-        # file1.writelines(str(list(map(lambda x: '0' if len(x) <= 0 else x.pop(), self.channel))) + '\n')
-        stations_str = ""
-        for c in range(0, len(self.channel)):
-            filtered = list(filter(lambda x: x.location == c, stations))
-            if len(filtered) <= 0:
-                stations_str = stations_str + '   '
-            else:
-                stations_str = stations_str + " {:2}".format(str(filtered[0].station_id))
-            # stations_str = stations_str + '  '
-        file1.writelines(stations_str)
+        # stations_str = ""
+        # for c in range(0, len(self.channel)):
+        #     filtered = list(filter(lambda x: x.location == c, stations))
+        #     if len(filtered) <= 0:
+        #         stations_str = stations_str + ' '
+        #     else:
+        #         stations_str = stations_str + "{:1}".format(str(filtered[0].station_id))  # + str(filtered[0].resend)
+        #     # stations_str = stations_str + '  '
+        # file1.writelines(stations_str)
+        # file1.write('\n')
+        # stati.writelines(stations_str)
 
     def update_lists(self, chan, dirs):
         self.channel = chan
         self.directions = dirs
 
     def run_simulation(self, file_name="simulation"):
-        while True:
+        k = 3000
+        while k > 0:
             new_channel = copy.deepcopy(self.channel)
             new_directions = copy.deepcopy(self.directions)
             for i in range(0, len(self.channel)):
@@ -154,6 +158,7 @@ class ChannelWorld:
                     if len(self.channel[station.location]) > 0:
                         if self.channel[station.location][0] == COLLISION:
                             print("Station" + str(station) + "detected collision")
+                            self.collision_counter = self.collision_counter + 1
                             station.transmitting = 0
                             station.collision = station.collision + 1
                             station.disrupting = 2 * CHANNEL_LENGTH
@@ -187,7 +192,7 @@ class ChannelWorld:
                         # station.transmitting = 2
                         self.channel[station.location].append(station.station_id)
                         self.directions[station.location].append(BOTH)
-
+            k = k - 1
 
 
 
