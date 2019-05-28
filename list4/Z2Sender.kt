@@ -21,7 +21,6 @@ internal class Z2Sender(myPort: Int, private val destinationPort: Int, private v
     private var retransmissionTimer: Long? = null
     private val retransmissionQueue = ArrayBlockingQueue<Z2Packet>(2 * windowSize)
 
-    private var startTime: Long = -1
     private var retransmissionCount = 0
 
     private fun packetToDatagram(packet: Z2Packet): DatagramPacket =
@@ -34,7 +33,7 @@ internal class Z2Sender(myPort: Int, private val destinationPort: Int, private v
     }
 
     internal inner class SenderThread : Thread() {
-        var x = true
+//        var x = true
         override fun run() {
             val inputQueue = ArrayBlockingQueue<Byte>(40)
             thread (start = true) {
@@ -45,8 +44,6 @@ internal class Z2Sender(myPort: Int, private val destinationPort: Int, private v
                         inputQueue.put(it.toByte())
                 }
             }
-
-//            startTime = System.currentTimeMillis()
 
             while (!interrupted()) {
                 generateSequence { confirmationsQueue.poll() }.forEach { confirmation ->
@@ -60,11 +57,10 @@ internal class Z2Sender(myPort: Int, private val destinationPort: Int, private v
                 }
                 if (retransmissionQueue.isEmpty()) {
                     retransmissionTimer = null
-                    if (x) {
-                        println("(window size = $windowSize, retransmissions: $retransmissionCount)\n" +
-                            "Transmitting all data took ${(System.currentTimeMillis() - startTime) / 1_000.0}ms")
-                     x = false
-                    }
+//                    if (x) {
+//                        println("(window size = $windowSize, retransmissions: $retransmissionCount)\n")
+//                     x = false
+//                    }
                 }
                 else {
                     retransmissionTimer = retransmissionTimer?.let { it - sleepTime }
@@ -74,7 +70,6 @@ internal class Z2Sender(myPort: Int, private val destinationPort: Int, private v
                     for (i in 1..retransmissionQueue.size) {
                         val packet = retransmissionQueue.remove()
                         send(packet,"Re")
-//                        sleep(sleepTime )
                         retransmissionCount++
                         retransmissionQueue.add(packet)
                     }
@@ -91,7 +86,7 @@ internal class Z2Sender(myPort: Int, private val destinationPort: Int, private v
                     if (retransmissionTimer == null)
                         retransmissionTimer = retransmissionDelay
                     retransmissionQueue.add(packet)
-                    x = true
+//                    x = true
                 }
 
                 sleep(sleepTime)

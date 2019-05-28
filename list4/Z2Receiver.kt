@@ -51,20 +51,6 @@ internal class Z2Receiver(myPort: Int, private val callbackPort: Int, private va
 
         @JvmStatic
         fun main(args: Array<String>) {
-//            var basePort = 0
-//            var callbackPort = 0
-//            if (args.size == 0) {
-//                Scanner(System.`in`).apply {
-//                    basePort = nextInt()
-//                    callbackPort = nextInt()
-//                }
-//            } else {
-//                basePort = Integer.parseInt(args[0])
-//                callbackPort = if (args.size > 1) Integer.parseInt(args[1]) else 0
-//            }
-//            val receiver = Z2Receiver(basePort, callbackPort).apply {
-//                start()
-//            }
             val receiver = Z2Receiver(Integer.parseInt(args[0]),
                 Integer.parseInt(args[1])).apply { start() }
         }
